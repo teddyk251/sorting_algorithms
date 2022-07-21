@@ -1,12 +1,8 @@
-#ifndef SORT_H
-#define SORT_H
+#ifndef SORTING_H
+#define SORTING_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include <stddef.h>
 
-
-/*Data structures*/
 /**
  * struct listint_s - Doubly linked list node
  *
@@ -21,20 +17,17 @@ typedef struct listint_s
 	struct listint_s *next;
 } listint_t;
 
+void print_array(const int *array, size_t size);
+void print_list(const listint_t *list);
+void swap_int(int *array, size_t a, size_t b);
+void swap_int1(int *array, int a, int b);
+void recursive_quick_sort(int *array, size_t size, int start, int end);
+size_t partition(int *array, size_t size, int start, int end);
 
-void print_array(const int *, size_t);
-void print_list(const listint_t *);
+void bubble_sort(int *array, size_t size);
+void insertion_sort_list(listint_t **list);
+void selection_sort(int *array, size_t size);
+void quick_sort(int *array, size_t size);
+void shell_sort(int *array, size_t size);
 
-void bubble_sort(int *, size_t);
-void insertion_sort_list(listint_t **);
-void selection_sort(int *, size_t);
-void quick_sort(int *, size_t);
-void shell_sort(int *, size_t);
-void cocktail_sort_list(listint_t **);
-void counting_sort(int *, size_t);
-void merge_sort(int *, size_t);
-void heap_sort(int *, size_t);
-void radix_sort(int *, size_t);
-void bitonic_sort(int *, size_t);
-void quick_sort_hoare(int *, size_t);
-#endif /*SORT_H*/
+#endif
