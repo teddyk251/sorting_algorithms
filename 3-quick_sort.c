@@ -1,80 +1,76 @@
+
+
 #include "sort.h"
-
-
+#include <stdio.h>
 /**
- * swapnprint - swaps two integers in an array and prints the array
- * @a: first number
- * @b: second number
- * @array: the arry to be printed
+ * quick_sort - sorts an array of integers in ascending order
+ * using the quick sort sort algorithm
+ * @array: pointer to the array
  * @size: size of the array
- */
-void swapnprint(int *a, int *b, int *array, size_t size)
-{
-	int tmp = *a;
-
-	*a = *b;
-	*b = tmp;
-	print_array(array, size);
-}
-
-/**
- * quick_sort_rec - a recursive implementation of the quick sort algorithm
- * @array: the array to be sorted
- * @size: the length of the array
- * @beg: the begning of the usnorted subset of the array from the left
- *    [1,2,4,3,7,6,8] in this case index 2
- * @end: the begning of the unsorted subset of the array from the right
- */
-void quick_sort_rec(int *array, size_t size, size_t beg, size_t end)
-{
-	int pivot;
-	size_t l = beg, r = end - 1;
-	bool lfound = false, rfound = false;
-
-	if (end <= beg || size <= 1)
-		return;
-	if (end == beg + 1)
-	{
-		if (array[beg] > array[end])
-			swapnprint(array + beg, array + end, array, size);
-		return;
-	}
-	pivot = array[end];
-	while (l < end)
-	{
-		if (l >= r)
-		{
-			if (lfound)
-				swapnprint(array + end, array + r, array, size), beg += 1;
-			else if (rfound)
-				end -= 1;
-			else
-				swapnprint(array + end, array + l, array, size);
-			quick_sort_rec(array, size, beg, end);
-			break;
-		}
-		if (array[l] >= pivot)
-			lfound = true;
-		if (array[r] < pivot)
-			rfound = true;
-		if (!lfound)
-			l++;
-		if (!rfound)
-			r--;
-		if (lfound && rfound)
-		{
-			swapnprint(array + l, array + r, array, size);
-			lfound = false, rfound = false;
-		}
-	}
-}
-
-/**
- * quick_sort - an implementation of the quick sort algorithm
- * @array: the array to be sorted
- * @size: the length of the array
- */
+*/
 void quick_sort(int *array, size_t size)
 {
-	quick_sort_rec(array, size, 0, size - 1);
+recursive_quick_sort(array, size, 0, size - 1);
+}
+
+/**
+ * recursive_quick_sort - recursive part
+ * @array: array to use
+ * @size: size
+ * @start: start index
+ * @end: end index
+*/
+void recursive_quick_sort(int *array, size_t size, int start, int end)
+{
+int p;
+if (start < end)
+{
+	p = partition(array, size, start, end);
+
+	recursive_quick_sort(array, size, start, p - 1);
+	recursive_quick_sort(array, size, p + 1, end);
+}
+
+}
+
+/**
+ * partition - partition the array
+ * @array: array to use
+ * @size: size
+ * @start: start index
+ * @end: end index
+ * Return: partition index
+*/
+size_t partition(int *array, size_t size, int start, int end)
+{
+int pivot = array[end];
+int i = start - 1;
+int j;
+
+for (j = start; j <= end - 1; j++)
+{
+	if (array[j] < pivot)
+	{
+		i++;
+		swap_int1(array, i, j);
+		print_array(array, size);
+	}
+}
+swap_int1(array, i + 1, end);
+print_array(array, size);
+return (i+1);
+}
+
+/**
+ * swap_int1 - swap variable values
+ * @array: array to use
+ * @a: index 1
+ * @b: index 2
+*/
+void swap_int1(int *array, int a, int b)
+{
+int tmp;
+tmp = array[a];
+array[a] = array[b];
+array[b] = tmp;
 }
